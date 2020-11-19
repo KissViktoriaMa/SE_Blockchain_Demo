@@ -15,6 +15,7 @@ public class Wallet {
 
     public HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
 
+    //constructor
     public Wallet() {
         generateKeyPair();
     }
@@ -22,28 +23,22 @@ public class Wallet {
     public void generateKeyPair() {
         try {
 
+            //generating key pair with different Algorithms: DiffieHellman, DSA, RSA, EC
             KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("DSA");
             keyPairGen.initialize(2048);
             KeyPair pair = keyPairGen.generateKeyPair();
-
-           /*
-            SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
-            ECGenParameterSpec ecSpec = new ECGenParameterSpec("prime192v1");
-            // Initialize the key generator and generate a KeyPair
-            keyGen.init(ecSpec, random); //256
-            SecretKey keyPair = keyGen.generateKey();
-            */
 
             // Set the public and private keys from the keyPair
             privateKey = pair.getPrivate();
             publicKey = pair.getPublic();
 
-
-
         }catch(Exception e) {
             throw new RuntimeException(e);
         }
     }
+
+
+
 
     public float getBalance() {
         float total = 0;

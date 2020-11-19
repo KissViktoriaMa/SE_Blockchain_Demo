@@ -1,6 +1,9 @@
 package Blockchain;
 
 import java.security.PublicKey;
+/*Transaction outputs will show the final amount sent to each party from the transaction.
+These, when referenced as inputs in new transactions, act as proof that you have coins to send.
+ */
 
 public class TransactionOutput {
     public String id;
