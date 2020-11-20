@@ -7,7 +7,7 @@ public class Block {
 
     public String hash;
     public String previousHash;
-    //public String merkleRoot;
+    public String merkleRoot;
     public ArrayList<Transaction> transactions = new ArrayList<Transaction>(); //our data will be a simple message.
     public long timeStamp; //as number of milliseconds since 1/1/1970.
     public int nonce;
@@ -25,15 +25,15 @@ public class Block {
         String calculatedhash = StringUtil.applySha256(
                 previousHash +
                         Long.toString(timeStamp) +
-                        Integer.toString(nonce)
-                        //merkleRoot
+                        Integer.toString(nonce) +
+                        merkleRoot
         );
         return calculatedhash;
     }
 
     //Increases nonce value until hash target is reached.
     public void mineBlock(int difficulty) {
-        //merkleRoot = StringUtil.getMerkleRoot(transactions);
+        merkleRoot = StringUtil.getMerkleRoot(transactions);
         String target = StringUtil.getDificultyString(difficulty); //Create a string with difficulty * "0"
         while(!hash.substring( 0, difficulty).equals(target)) {
             nonce ++;

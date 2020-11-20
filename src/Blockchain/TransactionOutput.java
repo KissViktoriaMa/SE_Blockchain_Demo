@@ -5,6 +5,8 @@ import java.security.PublicKey;
 These, when referenced as inputs in new transactions, act as proof that you have coins to send.
  */
 
+import java.security.PublicKey;
+
 public class TransactionOutput {
     public String id;
     public PublicKey reciepient; //also known as the new owner of these coins.

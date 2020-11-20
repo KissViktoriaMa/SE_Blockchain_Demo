@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.security.KeyPairGenerator;
+import java.security.*;
+import java.security.spec.ECGenParameterSpec;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Wallet {
 
@@ -15,31 +20,33 @@ public class Wallet {
 
     public HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
 
-    //constructor
     public Wallet() {
         generateKeyPair();
     }
 
     public void generateKeyPair() {
         try {
-
-            ECGenParameterSpec ecSpec = new ECGenParameterSpec("secp256k1");
-            //generating key pair with different Algorithms: DiffieHellman, DSA, RSA, EC
-            KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("EC");
-            keyPairGen.initialize(ecSpec, new SecureRandom());
+            KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("DSA");
+            keyPairGen.initialize(2048);
             KeyPair pair = keyPairGen.generateKeyPair();
 
+            /*
+            SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+            ECGenParameterSpec ecSpec = new ECGenParameterSpec("prime192v1");
+            // Initialize the key generator and generate a KeyPair
+            keyGen.initialize(ecSpec, random); //256
+            KeyPair keyPair = keyGen.generateKeyPair();
             // Set the public and private keys from the keyPair
-            PrivateKey privateKey = pair.getPrivate();
-            PublicKey publicKey = pair.getPublic();
+
+             */
+            privateKey = pair.getPrivate();
+            publicKey = pair.getPublic();
+            System.out.println("Keys generated");
 
         }catch(Exception e) {
             throw new RuntimeException(e);
         }
     }
-
-
-
 
     public float getBalance() {
         float total = 0;
@@ -69,7 +76,7 @@ public class Wallet {
         }
 
         Transaction newTransaction = new Transaction(publicKey, _recipient , value, inputs);
-        //newTransaction.generateSignature(privateKey);
+        newTransaction.generateSignature(privateKey);
 
         for(TransactionInput input: inputs){
             UTXOs.remove(input.transactionOutputId);
@@ -79,3 +86,4 @@ public class Wallet {
     }
 
 }
+
