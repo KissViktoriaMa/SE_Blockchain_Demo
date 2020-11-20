@@ -96,6 +96,7 @@ public class BlockChain {
 
     }
 
+    //---------------------------------------------------------------------------------------------------------------------
     public static Boolean isChainValid() {
         Block currentBlock;
         Block previousBlock;
@@ -129,12 +130,12 @@ public class BlockChain {
             for(int t=0; t <currentBlock.transactions.size(); t++) {
                 Transaction currentTransaction = currentBlock.transactions.get(t);
 
-                /*
+/*
                 if(!currentTransaction.verifySignature()) {
                     System.out.println("#Signature on Transaction(" + t + ") is Invalid");
                     return false;
                 }
-                */
+*/
                 if(currentTransaction.getInputsValue() != currentTransaction.getOutputsValue()) {
                     System.out.println("#Inputs are note equal to outputs on Transaction(" + t + ")");
                     return false;
@@ -175,40 +176,9 @@ public class BlockChain {
         System.out.println("Blockchain is valid");
         return true;
     }
-
+    //---------------------------------------------------------------------------------------------------------------------
     public static void addBlock(Block newBlock) {
         newBlock.mineBlock(difficulty);
         blockchain.add(newBlock);
     }
 }
-/*
- public static void main(String[] args) {
-		//add our blocks to the blockchain ArrayList:
-		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider()); //Setup Bouncey castle as a Security Provider
-
-		//walletA = new Wallet();
-		//walletB = new Wallet();
-
-		//System.out.println("Private and public keys:");
-		//System.out.println(StringUtil.getStringFromKey(walletA.privateKey));
-		//System.out.println(StringUtil.getStringFromKey(walletA.publicKey));
-
-		createGenesis();
-
-		//Transaction transaction = new Transaction(walletA.publicKey, walletB.publicKey, 5);
-		//transaction.signature = transaction.generateSignature(walletA.privateKey);
-
-		//System.out.println("Is signature verified:");
-		//System.out.println(transaction.verifiySignature());
-
-	}*/
-
-
-//System.out.println("Trying to Mine block 1... ");
-//addBlock(new Block("Hi im the first block", "0"));
-
-
-
-        /*for (int i = 0; i < blockchain.size(); i++){
-            System.out.println((blockchain.get(blockchain.size()-1).hash));
-        }*/

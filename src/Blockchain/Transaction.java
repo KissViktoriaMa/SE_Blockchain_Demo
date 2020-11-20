@@ -22,18 +22,20 @@ public class Transaction {
         this.value = value;
         this.inputs = inputs;
     }
-
+    //---------------------------------------------------------------------------------------------------------------------
     // Alle daten singniern, was wir schutzen wollen
     public void generateSignature(PrivateKey privateKey) {
         String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(reciepient) + Float.toString(value);
         signature = StringUtil.applyECDSASig(privateKey, data);
-    }/*
+    }
+/*
     //verification: keine Daten wurde geändert (true/false)
     public boolean verifySignature() {
         String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(reciepient) + Float.toString(value);
         return StringUtil.verifyECDSASig(sender, data, signature);
-    }*/
-
+    }
+*/
+    //---------------------------------------------------------------------------------------------------------------------
 
     //returns sum of inputs(UTXOs) values
     public float getInputsValue() {
@@ -53,7 +55,7 @@ public class Transaction {
         }
         return total;
     }
-
+    //---------------------------------------------------------------------------------------------------------------------
     //hash calculation --> wird als TRANSACTION ID verwendet
     private String calulateHash() {
         sequence++; //increase the sequence to avoid 2 identical transactions having the same hash
@@ -64,14 +66,14 @@ public class Transaction {
         );
     }
 
-
+//---------------------------------------------------------------------------------------------------------------------
     public boolean processTransaction() {
 /*
         if (verifySignature() == false) {
             System.out.println("#Transaction Signature failed to verify");
             return false;
-        }*/
-
+        }
+*/
         //Gathers transaction inputs (Making sure they are unspent):
         for (TransactionInput i : inputs) {
             i.UTXO = BlockChain.UTXOs.get(i.transactionOutputId);

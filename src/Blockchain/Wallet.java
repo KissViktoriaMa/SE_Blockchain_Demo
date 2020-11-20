@@ -23,14 +23,15 @@ public class Wallet {
     public void generateKeyPair() {
         try {
 
+            ECGenParameterSpec ecSpec = new ECGenParameterSpec("secp256k1");
             //generating key pair with different Algorithms: DiffieHellman, DSA, RSA, EC
-            KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("DSA");
-            keyPairGen.initialize(2048);
+            KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("EC");
+            keyPairGen.initialize(ecSpec, new SecureRandom());
             KeyPair pair = keyPairGen.generateKeyPair();
 
             // Set the public and private keys from the keyPair
-            privateKey = pair.getPrivate();
-            publicKey = pair.getPublic();
+            PrivateKey privateKey = pair.getPrivate();
+            PublicKey publicKey = pair.getPublic();
 
         }catch(Exception e) {
             throw new RuntimeException(e);
